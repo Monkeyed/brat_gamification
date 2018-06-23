@@ -1,0 +1,241 @@
+/*!
+ * Start Bootstrap - Small Business (https://startbootstrap.com/template-overviews/small-business)
+ * Copyright 2013-2017 Start Bootstrap
+ * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-small-business/blob/master/LICENSE)
+ */
+body{
+    background-color: #effcfa;
+}
+
+/*Top bar, progress bar and total info and title */
+.title{
+    font-size: 160%;
+    margin: 1%;
+    max-width: 24.5%;
+}
+.totalProgress{
+    font-size: 150%;
+    margin-right: 10em;
+    margin-left: 5em;
+    margin-top: 2em;
+    margin-bottom:1em;
+    text-align: center;
+    background-color: #82ed7b;
+    border-radius: 10px 10px 10px 10px;
+    overflow:hidden;
+    max-width: 25%;
+}
+.progress{
+    margin-left: 2%;
+    margin-right: 2%;
+}
+.totalUnder{
+    text-align: center;
+    font-size: 115%;
+}
+.totInfo{
+    margin-right: 4em;
+}
+/*progress bar colors*/
+.bg-success{
+    background-color: #82ed7b !important;
+}
+.bg-warning{
+    background-color: #d4ff91 !important;
+}
+.bg-danger{
+    background-color: #fc8b7b !important;
+    height: 120%
+}
+/*transition duration here determines how slow the progress bar adapts to new values */
+.progress-bar{
+    transition-duration: 3s;
+}
+
+/*failsafe button classes, time removed*/
+.hideButton{
+     visibility: hidden;
+ }
+
+
+/*session column */
+.sfb{
+    text-align: center;
+    max-width: 24.5%;
+    /*border: 3px solid #c0f4f7;*/
+    border-radius: 30px 30px 30px 30px;
+    font-size: 115%;
+}
+#newPages{
+    font-size:150%;
+}
+#newAnns{
+    font-size:150%;
+}
+#newUnique{
+    font-size:150%;
+}
+
+.prevNr{
+    font-size: 90%;
+}
+
+.announcementsWord{
+    padding:1%;
+}
+
+.achNot{
+    padding-left: 10px;
+    visibility : hidden;
+}
+.achNotImg{
+    max-width: 11%;
+    float:left;
+    margin-right:2%;
+}
+.achNotText{
+    text-align: left;
+}
+
+.sinfo{
+    background-color: #d4ff91;
+    border-radius: 10px 10px 10px 10px;
+    overflow:hidden;
+    margin-top: 10px;
+}
+.btn-primary{
+    margin: 0.1em;
+}
+
+/*bubble graph, mainly resizing*/
+.bubblevis{
+    zoom: 80%;
+    padding: 0.3em;
+    margin: 1em;
+}
+#vis{
+    zoom: 50%;
+    padding-left: 15%;
+    font-size: 2.5em;
+}
+#visLegend{
+    padding-top:19%;
+    text-align: right;
+    padding-right: 1%;
+    font-size: 120%;
+}
+.legendNewEntryColor{
+    background-color: #d4ff91 ;
+}
+.legendExpandedEntryColor{
+    background-color: #82ed7b ;
+}
+.legendOldEntryColor{
+    background-color: #ced3cd ;
+}
+
+
+
+
+
+
+/*achievements */
+.ach{
+    padding: 0.5em;
+    border: 3px solid #c0f4f7;
+    margin: 0.6em;
+    zoom: 60%;
+    border-radius: 30px 30px 30px 30px;
+    overflow:hidden;
+}
+.achsub{
+    font-size: 120%;
+    margin-left: 2em;
+    margin-top: 0.2em;
+}
+.achimg{
+    max-width: 60%;
+    margin-bottom: 0.2em;
+    margin-right: 0.2em;
+}
+#workerImage{
+    max-width: 50%;
+    margin-left: 1em;
+}
+.achTitle{
+    font-size: 200%;
+}
+.achsubText{
+    max-width: 50%;
+    margin-right: 3em;
+    text-align: right;
+    margin-top: 0.5em;
+}
+.achLevel{
+    font-size: 300%;
+    margin-left: 0.4em;
+}
+.achLevelWord{
+    font-size: 160%;
+}
+.achExpText{
+    font-size:180%;
+    margin-top: 1em;
+}
+.achNumbers{
+    margin-top: 1em;
+    font-size: 200%;
+}
+.achNrLeft{
+    font-size: 130%;
+}
+
+/* new circle stuff */
+.circle {
+    width: 100px;
+    margin: 6px 6px 10px;
+    display: inline-block;
+    position: relative;
+    text-align: center;
+    line-height: 1.2;
+}
+.circle strong {
+    position: absolute;
+    top: 25px;
+    left: 10px;
+    width: 130%;
+    /*text-align: center;*/
+    line-height: 40px;
+    font-size: 20px;
+}
+
+/* Progress Bars with Markers, by timgomm https://bootsnipp.com/snippets/1KnKq
+stuff on subdivision, not working atm */
+/*
+.bar-step {
+    position:absolute;
+    margin-top:-20px;
+    z-index:1;
+    font-size:12px;
+}
+.label-txt {
+    float: left;
+}
+.label-line {
+    float: right;
+    background: #000;
+    height:50px;
+    width:1px;
+    margin-left: 5px;
+}
+.label-percent {
+    float: right;
+    margin-left: 5px;
+}
+*/
+
+/* explanatory text for datavis */
+.legendExplanatoryText{
+    font-size: 1.3em;
+    text-align:right;
+}

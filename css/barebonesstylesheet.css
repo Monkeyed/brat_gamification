@@ -1,0 +1,48 @@
+div{
+    padding: 30px;
+}
+p{
+    font-size: 1.2em;
+}
+
+#hideMe{
+    visibility: collapse; !important;
+}
+
+#hideMe2{
+    visibility: collapse; !important;
+}
+.achNot{
+     padding-left: 10px;
+     visibility : hidden;
+ }
+
+#oldPercent{
+    visibility: collapse; !important;
+}
+#newPercent{
+    visibility: collapse; !important;
+}
+
+#pBar1{
+    visibility: collapse; !important;
+}
+#pBar2{
+    visibility: collapse; !important;
+}
+#pBar3{
+    visibility: collapse; !important;
+}
+
+/*failsafe button classes, time removed*/
+.hideButton{
+    visibility: hidden;
+}
+
+#showCountList{
+    font-size: 150%;
+}
+
+#reallyHideMe{
+    visibility: collapse;
+}

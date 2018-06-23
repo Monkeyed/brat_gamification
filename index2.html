@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Annotation feedback</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/barebonesstylesheet.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/reset.css">
+    <script src="annload.js"></script>
+    <script src="jquery/dist/jquery.js"></script>
+    <script src="w3.js"></script>
+</head>
+<body>
+<script>failSafe()</script>
+<!-- Page Content -->
+
+<div class="titleDiv">
+    <h1>Annotation feedback</h1>
+</div>
+<div class="row">
+    <div class="col md-6">
+
+        <div class="buttonHolder">
+            <button type="button" class="btn btn-primary hideButton" id="scannerButton" onclick="runAllBareBoneFunctions()">
+                Click to update feedback
+            </button>
+            <!--
+            <button type="button" class="btn btn-primary hideButton" id="uniqueButton" onclick="unique()">
+                2.) Click me second
+            </button>
+            <button type="button" class="btn btn-primary hideButton" id="cir"
+                    onclick="logStats(), insertCountList(), buttonReset()">
+                3.) Click me third
+            </button>
+            -->
+        </div>
+
+        <div class="sessionFeedback">
+            <h2>Session Feedback</h2> <br>
+            <p class="feedbackName">Date: <span id="sessDate">10/01/2018</span></p>
+            <!-- <p class="feedbackName">Pages: <span id="sessPages"></span></p> -->
+            <p class="feedbackName">Annotations: <span id="sessAnns"></span></p>
+            <p class="feedbackName">New annotations: <span id="sessNews"></span></p>
+
+        </div>
+
+        <div class="totalFeedback">
+            <h2>Total Feedback</h2> <br>
+            <!--
+            <p class="totInfo">Pages annotated:
+                <span id="newPages">0</span> <span class="prevNr">(previously: <span id="oldPages">0</span>)</span>
+            </p><br> -->
+            <p class="totInfo">Annotations:
+                <span id="newAnns">0</span> <span class="prevNr">(previously: <span id="oldAnns">0</span>) </span>
+            </p><br>
+            <p class="totInfo">Unique annotations:
+                <span id="newUnique">0</span> <span class="prevNr">(previously: <span id="oldUnique">0</span>) </span>
+            </p><br>
+
+        </div>
+    </div>
+
+    <div class="col md-6">
+
+        <div id="countListDiv">
+            <p class="countListTitle">Here are all the annotations you have done so far.</p>
+            <div id="showCountList">
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+<!-- div holding scripts -->
+<div class="scriptholder">
+    <!-- session functions using sAnns as test element
+    <script>
+        document.getElementById("sAnns").innerHTML = "Number of items from script", totList.length;
+    </script>
+    -->
+    <script src="d3/d3.min.js"></script>
+    <script src="d3/d3.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!--Bubblechart scripts -->
+    <script src="//d3js.org/d3.v4.min.js"></script>
+    <script src="src/tooltip.js"></script>
+    <script src="src/bubble_chart.js"></script>
+    <!--<script>valueReset()</script>-->
+    <script src="jquery/dist/jquery.js"></script>
+    <script src="jquery-circle-progress-1.2.2/dist/circle-progress.js"></script>
+    <script src="circles.js"></script>
+</div>
+<!-- fake id and class holder divs so that annload.js doesn't get caught up -->
+<div class="fakeHolders" id="reallyHideMe">
+    <div id="pBar1"></div>
+    <div id="pBar2"></div>
+    <div id="pBar3"></div>
+    <div id="oldPercent"></div>
+    <div id="newPercent"></div>
+    <div class="row achrow" id="hideMe">
+
+        <div class="col ach" id="achievement1">
+            <div class="achsub" style="float:left;">
+                <div class="worker circle"><strong>
+                    <img src="assets/worker.svg" alt="" class="img-fluid achimg" id="workerImage"></strong>
+                </div>
+            </div>
+            <div class="achsubText" style="float:right;">
+                <span class="achTitle">WORKER</span>
+                <span class="achLevelWord">level</span>
+                <span class="achLevel" id="workerLevel">0</span><br>
+                <span class="achExpText">(total annotations made)</span><br>
+                <div class="achNumbers">
+                <span class="achNrLeft">
+                    <span class="achNrs" id="workerNumbersNow">0 </span>
+                    <span class="achNrs">/</span>
+                    <span class="achNrs" id="workerNumbersNeeded">0 </span>
+                    for level
+                    <span id="workerNextLevel">1</span></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col ach" id="achievement2">
+            <div class="achsub" style="float:left;">
+                <div class="identifier circle"><strong>
+                    <img src="assets/Identifier.svg" alt="" class="img-fluid achimg"></strong>
+                </div>
+            </div>
+            <div class="achsubText" style="float:right;">
+                <span class="achTitle">Identifier</span>
+                <span class="achLevelWord">level</span>
+                <span class="achLevel" id="identifierLevel">0</span><br>
+                <span class="achExpText">(unique annotations made)</span><br>
+                <div class="achNumbers">
+                <span class="achNrLeft">
+                    <span class="achNrs" id="identifierNumbersNow">0 </span>
+                    <span class="achNrs">/</span>
+                    <span class="achNrs" id="identifierNumbersNeeded">0 </span>
+                    for level
+                    <span id="identifierNextLevel">1</span></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col ach" id="achievement3">
+            <div class="achsub" style="float:left;">
+                <div class="marathon circle"><strong>
+                    <img src="assets/Marathon.svg" alt="" class="img-fluid achimg"></strong>
+                </div>
+            </div>
+            <div class="achsubText" style="float:right;">
+                <span class="achTitle">Marathon</span>
+                <span class="achLevelWord">level</span>
+                <span class="achLevel" id="marathonLevel">0</span><br>
+                <span class="achExpText">(most ann's in single session)</span><br>
+                <div class="achNumbers">
+                <span class="achNrLeft">
+                    <span class="achNrs" id="marathonNumbersNow">0 </span>
+                    <span class="achNrs">/</span>
+                    <span class="achNrs" id="marathonNumbersNeeded">0 </span>
+                    for level
+                    <span id="marathonNextLevel">1</span></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col ach" id="achievement4">
+            <div class="achsub" style="float:left;">
+                <div class="streak circle"><strong>
+                    <img src="assets/Streak.svg" alt="" class="img-fluid achimg"></strong>
+                </div>
+            </div>
+            <div class="achsubText" style="float:right;">
+                <span class="achTitle">Streak</span>
+                <span class="achLevelWord">level</span>
+                <span class="achLevel">0</span><br>
+                <span class="achExpText">(work days in a row)</span><br>
+                <div class="achNumbers">
+                <span class="achNrLeft">
+                    <span class="achNrs" id="StreakNumbers">1/7</span>
+                    for level
+                    <span id="StreakNextLevel">1</span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="hideme2">
+        <div class="newAchievements">
+            <div class="achNot" id="workerNot">
+                <div class="achNotImgBox">
+                </div>
+                <div class="achNotTextBox">
+                    <p class="achNotText">
+                        <br>
+                        <span id="achNotWorkerLevel"> </span><br>
+                        <span id="achNotWorkerAmount"></span>
+                    </p>
+                </div>
+            </div>
+            <div class="achNot" id="identifierNot">
+                <div class="achNotImgBox">
+                </div>
+                <div class="achNotTextBox">
+                    <p class="achNotText">
+                         <span id="achNotIdentifierLevel"> </span><br>
+                        <span id="achNotIdentifierAmount"></span>
+                    </p>
+                </div>
+            </div>
+            <div class="achNot" id="marathonNot">
+                <div class="achNotImgBox">
+                </div>
+                <div class="achNotTextBox">
+                    <p class="achNotText"> <span id="achNotMarathonLevel"></span><br>
+                        <span id="achNotMarathonAmount"></span>
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

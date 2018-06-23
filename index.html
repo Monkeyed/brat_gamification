@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Feedback center</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/small-business.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/bubble_chart.css">
+    <script src="annload.js"></script>
+    <script src="jquery-circle-progress-1.2.2/dist/circle-progress.js"></script>
+</head>
+
+<body>
+<script>failSafe()</script>
+<!-- Page Content -->
+
+<!-- Progress bar div -->
+<div class="topSection">
+    <div class="header row">
+        <div class="col title"><h1>The Data Cloud</h1></div>
+        <div class="col totalProgress">Total completion:  <span id="newPercent">0</span> <span class="prevNr">(previously: <span id="oldPercent">0</span>)</span>
+        </div>
+    </div>
+    <div class="progress top">
+        <div class="progress-bar bg-success" id="pBar1" role="progressbar" style="width: 0" aria-valuenow="0"
+             aria-valuemin="0"
+             aria-valuemax="100"></div>
+        <div class="progress-bar bg-warning" id="pBar2" role="progressbar" style="width: 0" aria-valuenow="0"
+             aria-valuemin="0"
+             aria-valuemax="100"></div>
+        <div class="progress-bar bg-danger" id="pBar3" role="progressbar" style="width: 100%" aria-valuenow="0"
+             aria-valuemin="0"
+             aria-valuemax="100"></div>
+    </div>
+    <!-- The total feedback under the progress bar-->
+    <div class="row">
+        <div class="totalUnder col">
+            <!--
+            <span class="totInfo">Pages annotated:
+                <span id="newPages">0</span> <span class="prevNr">(previously: <span id="oldPages">0</span>)</span>
+            </span><br> -->
+            <span class="totInfo">Annotations:
+                <span id="newAnns">0</span> <span class="prevNr">(previously: <span id="oldAnns">0</span>) </span>
+            </span><br>
+            <span class="totInfo">Unique annotations:
+                <span id="newUnique">0</span> <span class="prevNr">(previously: <span id="oldUnique">0</span>) </span>
+            </span><br>
+        </div>
+    </div>
+</div>
+
+<!-- Session info and visualization -->
+<div class="container-fluid">
+    <div class="row">
+        <!-- session info -->
+        <div class="col sfb">
+            <h3 class="sinfo">session info</h3>
+            <p id ="date">10/01/2018</p>
+            <!-- <p id="sjquery">Pages: <span id="sessPages">0</span></p> -->
+            <p id="sAnns">Annotations: <span id="sessAnns">0</span></p>
+            <p id="sNewAnns">New annotations: <span id="sessNews">0</span></p>
+            <button type="button" class="btn btn-primary hideButton" id="scannerButton" onclick="runAllFunctions()">
+                Click to update feedback
+            </button>
+            <!--
+            <button type="button" class="btn btn-primary hideButton" id="uniqueButton" onclick="unique()">
+                2.) Click me second
+            </button>
+            <button type="button" class="btn btn-primary hideButton" id="cir"
+                    onclick="logStats(),achievements(), showBubs(), countListToGray(), buttonReset()">
+                3.) Click me third
+            </button>
+            -->
+            <!-- <button type="button" class="btn btn-primary" onclick="colorUpdate()">test color function</button> -->
+            <!-- announcements in session info -->
+            <div class="announcements">
+                <p class="announcementsWord">Announcements:</p>
+                <div class="newAchievements">
+                    <div class="achNot" id="workerNot">
+                        <div class="achNotImgBox">
+                            <img src="assets/worker.svg" alt="" class="achNotImg">
+                        </div>
+                        <div class="achNotTextBox">
+                            <p class="achNotText">
+                                Achievement!<br>
+                                You have reached level <span id="achNotWorkerLevel"> 1</span><br>
+                                <span id="achNotWorkerAmount">10</span> total annotations.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="achNot" id="identifierNot">
+                        <div class="achNotImgBox">
+                            <img src="assets/Identifier.svg" alt="" class="achNotImg">
+                        </div>
+                        <div class="achNotTextBox">
+                            <p class="achNotText">
+                                Achievement!<br>
+                                You have reached level <span id="achNotIdentifierLevel"> 1</span><br>
+                                <span id="achNotIdentifierAmount">10</span> unique annotations.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="achNot" id="marathonNot">
+                        <div class="achNotImgBox">
+                            <img src="assets/Marathon.svg" alt="" class="achNotImg">
+                        </div>
+                        <div class="achNotTextBox">
+                            <p class="achNotText">
+                                Achievement!<br>
+                                You have reached level <span id="achNotMarathonLevel"> 1</span><br>
+                                <span id="achNotMarathonAmount">10</span> annotations in single session.
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Datavis -->
+        <div class="bubblevis col">
+            <!--D3.js Michael Bostock & Jim Vallandingham copyright disclaimer:
+
+        Copyright (c) 2010-2016, Michael Bostock
+        All rights reserved.
+
+        Bubble Chart:
+
+        Copyright (c) 2016, Jim Vallandingham
+        All rights reserved.
+
+        Redistribution and use in source and binary forms, with or without
+        modification, are permitted provided that the following conditions are met:
+
+        * Redistributions of source code must retain the above copyright notice, this
+        list of conditions and the following disclaimer.
+
+        * Redistributions in binary form must reproduce the above copyright notice,
+        this list of conditions and the following disclaimer in the documentation
+        and/or other materials provided with the distribution.
+
+        THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+        AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+        IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+        DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+        FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+        DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+        SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+        CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+        OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+        OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. -->
+            <h1>Annotations</h1>
+            <!--
+            <div id="toolbar">
+                <a href="#" id="all" class="button active">All Grants</a>
+                <a href="#" id="year" class="button">Grants By Year</a>
+            </div>
+            -->
+            <div id="vis"></div>
+
+        </div>
+        <!-- visualization legend -->
+        <div id="visLegend">
+            <p class="legendNewEntries">A new annotation will be  in <span class="legendNewEntryColor">this color</span></p>
+            <p class="legendExpandedEntries">An annotation whose count has increased will be in <span class="legendExpandedEntryColor">this color</span></p>
+            <p class="legendoldEntries">An annotation whose count hasn't changed in the last session will be in <span class="legendOldEntryColor">this color</span></p>
+            <p class="legendExplanatoryText">Hover mouse over bubbles to see annotation info.</p>
+        </div>
+
+    </div>
+</div>
+
+<!-- Achievements -->
+<div class="container-fluid">
+    <div class="achPreRow">
+        <h5>Achievements, rewarded at set amounts of annotations</h5>
+    </div>
+    <div class="row achrow">
+        <!-- Worker -->
+        <div class="col ach" id="achievement1">
+            <div class="achsub" style="float:left;">
+                <div class="worker circle"><strong>
+                    <img src="assets/worker.svg" alt="" class="img-fluid achimg" id="workerImage"></strong>
+                </div>
+            </div>
+            <div class="achsubText" style="float:right;">
+                <span class="achTitle">WORKER</span>
+                <span class="achLevelWord">level</span>
+                <span class="achLevel" id="workerLevel">0</span><br>
+                <span class="achExpText">(total annotations made)</span><br>
+                <div class="achNumbers">
+                <span class="achNrLeft">
+                    <span class="achNrs" id="workerNumbersNow">0 </span>
+                    <span class="achNrs">/</span>
+                    <span class="achNrs" id="workerNumbersNeeded">0 </span>
+                    for level
+                    <span id="workerNextLevel">1</span></span>
+                </div>
+            </div>
+        </div>
+        <!-- Identifier -->
+        <div class="col ach" id="achievement2">
+            <div class="achsub" style="float:left;">
+                <div class="identifier circle"><strong>
+                    <img src="assets/Identifier.svg" alt="" class="img-fluid achimg"></strong>
+                </div>
+            </div>
+            <div class="achsubText" style="float:right;">
+                <span class="achTitle">Identifier</span>
+                <span class="achLevelWord">level</span>
+                <span class="achLevel" id="identifierLevel">0</span><br>
+                <span class="achExpText">(unique annotations made)</span><br>
+                <div class="achNumbers">
+                <span class="achNrLeft">
+                    <span class="achNrs" id="identifierNumbersNow">0 </span>
+                    <span class="achNrs">/</span>
+                    <span class="achNrs" id="identifierNumbersNeeded">0 </span>
+                    for level
+                    <span id="identifierNextLevel">1</span></span>
+                </div>
+            </div>
+        </div>
+        <!-- Marathon -->
+        <div class="col ach" id="achievement3">
+            <div class="achsub" style="float:left;">
+                <div class="marathon circle"><strong>
+                    <img src="assets/Marathon.svg" alt="" class="img-fluid achimg"></strong>
+                </div>
+            </div>
+            <div class="achsubText" style="float:right;">
+                <span class="achTitle">Marathon</span>
+                <span class="achLevelWord">level</span>
+                <span class="achLevel" id="marathonLevel">0</span><br>
+                <span class="achExpText">(most ann's in single session)</span><br>
+                <div class="achNumbers">
+                <span class="achNrLeft">
+                    <span class="achNrs" id="marathonNumbersNow">0 </span>
+                    <span class="achNrs">/</span>
+                    <span class="achNrs" id="marathonNumbersNeeded">0 </span>
+                    for level
+                    <span id="marathonNextLevel">1</span></span>
+                </div>
+            </div>
+        </div>
+        <!-- Streak -->
+        <div class="col ach" id="achievement4">
+            <div class="achsub" style="float:left;">
+                <div class="streak circle"><strong>
+                    <img src="assets/Streak.svg" alt="" class="img-fluid achimg"></strong>
+                </div>
+            </div>
+            <div class="achsubText" style="float:right;">
+                <span class="achTitle">Streak</span>
+                <span class="achLevelWord">level</span>
+                <span class="achLevel">0</span><br>
+                <span class="achExpText">(work days in a row)</span><br>
+                <div class="achNumbers">
+                <span class="achNrLeft">
+                    <span class="achNrs" id="StreakNumbers">1/7</span>
+                    for level
+                    <span id="StreakNextLevel">1</span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- div holding scripts -->
+<div class="scriptholder">
+    <!-- session functions using sAnns as test element
+    <script>
+        document.getElementById("sAnns").innerHTML = "Number of items from script", totList.length;
+    </script>
+    -->
+    <script src="d3/d3.min.js"></script>
+    <script src="d3/d3.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!--Bubblechart scripts -->
+    <script src="//d3js.org/d3.v4.min.js"></script>
+    <script src="src/tooltip.js"></script>
+    <script src="src/bubble_chart.js"></script>
+    <!--<script>valueReset()</script>-->
+    <script src="jquery/dist/jquery.js"></script>
+    <script src="jquery-circle-progress-1.2.2/dist/circle-progress.js"></script>
+    <script src="circles.js"></script>
+</div>
+</body>
+
+</html>
