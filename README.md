@@ -10,3 +10,6 @@ The project is not scalable and will not be further developed, as it has served 
 Special thanks to Mariet Theune ( http://wwwhome.cs.utwente.nl/~theune/ ) from the Human Media Interaction department at the University
 of Twente ( https://www.utwente.nl/en/eemcs/hmi/ ) and Dolf Trieschnigg from MyDataFactory ( https://www.mydatafactory.com/ ) in 
 suporting and guiding me through my work. 
+
+https://github.com/Monkeyed/brat_gamification_nodata/blob/master/Test%20screenshot.png
+screenshot of gamified feedback interface from testing phase 
